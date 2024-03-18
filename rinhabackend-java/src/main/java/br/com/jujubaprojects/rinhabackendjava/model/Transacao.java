@@ -15,7 +15,9 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
-@Table
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Table(name = "transacoes")
 public class Transacao {
 
     @Id
@@ -27,23 +29,23 @@ public class Transacao {
 
     private String descricao;
     @JsonProperty("realizada_em")
- //   @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
+    @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
     @JsonFormat(pattern = "dd/MM/yyyy - HH:mm")
     private LocalDateTime realizadaEm = LocalDateTime.now();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    
-    private int idCliente;
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
 
 
-    public Transacao(int valor, char tipo, String descricao, LocalDateTime realizadaEm, int idCliente) {
+    public Transacao(int valor, char tipo, String descricao, LocalDateTime realizadaEm, Cliente cliente) {
         this.valor = valor;
         this.tipo = tipo;
         this.descricao = descricao;
         this.realizadaEm = realizadaEm;
-        this.idCliente = idCliente;
+        this.cliente = cliente;
     }
 
     public Transacao() {
