@@ -1,22 +1,14 @@
 package br.com.jujubaprojects.rinhabackendjava.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -26,48 +18,40 @@ public class Transacao {
     @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transacao_sequence")
    @SequenceGenerator(name = "transacao_sequence" , sequenceName = "transacao_sequence" , allocationSize = 1)
-    private int id;
-    private int valor;
-    private char tipo;
+    private Integer id;
+
+    private String tipo;
+
+    private Integer valor;
 
     private String descricao;
-    @JsonProperty("realizada_em")
-    @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
-    @JsonFormat(pattern = "dd/MM/yyyy - HH:mm")
-    private LocalDateTime realizadaEm = LocalDateTime.now();
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    private LocalDateTime realizadaEm;
 
+    private Integer clienteId;
 
-
-    public Transacao(int valor, char tipo, String descricao, LocalDateTime realizadaEm, Cliente cliente) {
-        this.valor = valor;
+    public Transacao(String tipo, Integer valor, String descricao, LocalDateTime realizadaEm, Integer clienteId) {
         this.tipo = tipo;
+        this.valor = valor;
         this.descricao = descricao;
         this.realizadaEm = realizadaEm;
-        this.cliente = cliente;
+        this.clienteId = clienteId;
     }
 
-    public Transacao() {
-    }
-
-    public int getValor() {
-        return valor;
-    }
-
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
-
-    public char getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(char tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Integer getValor() {
+        return valor;
+    }
+
+    public void setValor(Integer valor) {
+        this.valor = valor;
     }
 
     public String getDescricao() {
@@ -77,4 +61,23 @@ public class Transacao {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public LocalDateTime getRealizadaEm() {
+        return realizadaEm;
+    }
+
+    public void setRealizadaEm(LocalDateTime realizadaEm) {
+        this.realizadaEm = realizadaEm;
+    }
+
+    public Integer getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Integer clienteId) {
+        this.clienteId = clienteId;
+    }
+
+
+  
 }

@@ -1,12 +1,12 @@
 package br.com.jujubaprojects.rinhabackendjava.exeptions.impl;
 
 import br.com.jujubaprojects.rinhabackendjava.Web.exception.ValidacaoRequestException;
-import br.com.jujubaprojects.rinhabackendjava.dto.TransacaoRequest;
+import br.com.jujubaprojects.rinhabackendjava.dto.TransacaoRequestDto;
 import br.com.jujubaprojects.rinhabackendjava.enums.UnprocessableEntity;
 
 public class TipoValidoException extends RuntimeException { 
      
-      public void validar(TransacaoRequest transacaoRequest){
+      public void validar(TransacaoRequestDto transacaoRequest){
          char debito = 'D';
         char credito = 'C';
 
