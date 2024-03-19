@@ -2,6 +2,7 @@ package br.com.jujubaprojects.rinhabackendjava.model;
 
 import java.util.List;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +13,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+@Entity
 @Table(name = "clientes")
 public class Cliente {
     
@@ -19,7 +21,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cliente_sequence")
     @SequenceGenerator(name = "cliente_sequence" , sequenceName = "cliente_sequence", allocationSize = 1)
     private int id;
-    private Extrato limite;
+    private int limite;
     private int saldo;
 
     @OneToMany(mappedBy = "cliente")
@@ -30,16 +32,16 @@ public class Cliente {
     private Extrato extrato;
 
     
-    public Cliente(Extrato limite, int saldo, List<Transacao> transacoes, Extrato extrato) {
+    public Cliente(int limite, int saldo, List<Transacao> transacoes, Extrato extrato) {
         this.limite = limite;
         this.saldo = saldo;
         this.transacoes = transacoes;
         this.extrato = extrato;
     }
-    public Extrato getLimite() {
+    public int getLimite() {
         return limite;
     }
-    public void setLimite(Extrato limite, Extrato extrato) {
+    public void setLimite(int limite) {
         this.limite = limite;
     }
     public int getSaldo() {

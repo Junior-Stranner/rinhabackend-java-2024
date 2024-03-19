@@ -1,4 +1,4 @@
-package br.com.jujubaprojects.rinhabackendjava.exeptions;
+package br.com.jujubaprojects.rinhabackendjava.Web.exception;
 
 public class ValidacaoRequestException extends RuntimeException{
     

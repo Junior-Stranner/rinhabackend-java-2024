@@ -5,47 +5,46 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.FetchType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 
-@Table(name = "extratos")
+@Entity
 public class Extrato {
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "extrato_seuqence")
-    @SequenceGenerator(name= "extrato_seuqence", sequenceName = "extrato_seuqence", allocationSize = 1)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "extrato_sequence")
+    @SequenceGenerator(name= "extrato_sequence", sequenceName = "extrato_sequence", allocationSize = 1)
     private int id;
     
-    @JsonProperty("realizada_em")
-    @DateTimeFormat(pattern = "dd/MM/yyyy - HH:mm")
-    @JsonFormat(pattern = "dd/MM/yyyy - HH:mm")
-    private LocalDateTime dataExtrato = LocalDateTime.now();
+    @Column(name = "data_hora", nullable = false)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime dataHora = LocalDateTime.now();
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    private Cliente cliente;
 
-    public LocalDateTime getDataExtrato() {
-        return dataExtrato;
+    public Extrato() {
     }
 
-    public void setDataExtrato(LocalDateTime dataExtrato) {
-        this.dataExtrato = dataExtrato;
+    public Integer getId() {
+        return id;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public LocalDateTime getDataHora() {
+        return dataHora;
     }
 
-    
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
+
+
 }
