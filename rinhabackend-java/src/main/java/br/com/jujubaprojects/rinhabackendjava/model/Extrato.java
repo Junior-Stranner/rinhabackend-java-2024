@@ -30,4 +30,22 @@ public class Extrato {
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
+
+    public LocalDateTime getDataExtrato() {
+        return dataExtrato;
+    }
+
+    public void setDataExtrato(LocalDateTime dataExtrato) {
+        this.dataExtrato = dataExtrato;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    
 }

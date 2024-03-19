@@ -2,12 +2,15 @@ package br.com.jujubaprojects.rinhabackendjava.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.jujubaprojects.rinhabackendjava.model.Extrato;
 import br.com.jujubaprojects.rinhabackendjava.model.Transacao;
 
 
 public class ClienteResponde {
     
+    @JsonIgnore
     private int limite;
     private int saldo;
 

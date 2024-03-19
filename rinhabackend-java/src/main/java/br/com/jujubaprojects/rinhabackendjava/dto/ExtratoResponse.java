@@ -11,7 +11,6 @@ public class ExtratoResponse {
 
     private Saldo saldo;
 
-
     @JsonProperty("ultimas_transacoes")
     private List<Transacao> transacoes;
 

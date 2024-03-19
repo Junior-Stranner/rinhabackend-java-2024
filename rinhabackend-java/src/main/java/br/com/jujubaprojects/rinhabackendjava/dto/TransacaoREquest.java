@@ -1,6 +1,6 @@
 package br.com.jujubaprojects.rinhabackendjava.dto;
 
-public class TransacaoREquest {
+public class TransacaoRequest {
 
     private String valor;
 
