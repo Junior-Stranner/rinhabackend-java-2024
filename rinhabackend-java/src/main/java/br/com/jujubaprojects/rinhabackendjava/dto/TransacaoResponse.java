@@ -6,7 +6,7 @@ public class TransacaoResponse {
 
     private Character tipo;
 
-    private int saldo;
+    private double saldo;
 
    
     
