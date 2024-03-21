@@ -1,26 +1,25 @@
 package br.com.jujubaprojects.rinhabackendjava.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ExtratoResponseDto {
 
-    private int id;
+     ExtratoSaldoResponseDto saldo;
+    @JsonProperty("ultimas_transacoes")
+     List<TransacaoExtratoResponseDtO> extratoUltimasTransacoes;
 
-    private Saldo saldo;
 
-
-    public static class Saldo {
-
-        private int total;
-
-        @JsonProperty("data_extrato")
-        private LocalDateTime data;
-
-        private int limite;
-
-       
+    public ExtratoResponseDto(Integer saldoTotal, LocalDateTime now, double limite) {
     }
+
+
+    public ExtratoResponseDto(ExtratoResponseDto saldoDTO, List<TransacaoExtratoResponseDtO> ultimasTransacoes) {
+        //TODO Auto-generated constructor stub
+    }
+
+     
 }

@@ -11,9 +11,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.jujubaprojects.rinhabackendjava.Repository.ClienteRepository;
 import br.com.jujubaprojects.rinhabackendjava.Repository.TransacaoRepository;
+import br.com.jujubaprojects.rinhabackendjava.dto.ExtratoResponseDto;
+import br.com.jujubaprojects.rinhabackendjava.dto.TransacaoExtratoResponseDtO;
 import br.com.jujubaprojects.rinhabackendjava.dto.TransacaoRequestDto;
 import br.com.jujubaprojects.rinhabackendjava.model.Cliente;
 import br.com.jujubaprojects.rinhabackendjava.model.Transacao;
+import jakarta.transaction.Transactional;
 
 @Service
 public class TransacaoCrebito {
@@ -24,19 +27,32 @@ public class TransacaoCrebito {
     @Autowired
     private TransacaoRepository transacaoRepository;
 
-    public Optional<Object> efetuarTransacao(Integer id, Transacao transacao) {
-        return clienteRepository.buscarClientePorId(id)
-        .flatMap(cliente -> {
-            calcularSaldo(cliente, transacao);
-            Transacao novaTransacao = criarNovaTransacao(cliente, transacao.getTipo(), transacao);
-            return transacaoRepository.save(novaTransacao)
-                
-                });
+    @Transactional
+    public Transacao efetuarTransacao(Integer id, Transacao transacao) {
+        Cliente cliente = clienteRepository.buscarClientePorId(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado com o ID: " + id));
+        
+        calcularSaldo(cliente, transacao);
+        Transacao novaTransacao = criarNovaTransacao(cliente, transacao.getTipo(), transacao);
+        
+        return transacaoRepository.save(novaTransacao);
     }
 
+    public ExtratoResponseDto extrato(Integer id) {
+    Cliente cliente = clienteRepository.buscarClientePorId(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado com o ID: " + id));
 
-    private Transacao criarNovaTransacao(Cliente cliente, Transacao entity) {
-        return new Transacao(entity.getTipo(), entity.getValor(), entity.getDescricao(), LocalDateTime.now(), cliente.getClienteId());
+    Integer saldoTotal = transacaoRepository.getSaldoTotalById(id).orElse(0);
+    List<TransacaoExtratoResponseDtO> ultimasTransacoes = transacaoRepository.findByIdOrderByRealizadaEmDesc(id);
+
+    ExtratoResponseDto saldoDTO = new ExtratoResponseDto(saldoTotal, LocalDateTime.now(), cliente.getLimite());
+    
+    return new ExtratoResponseDto(saldoDTO, ultimasTransacoes);
+}
+
+
+    private Transacao criarNovaTransacao(Cliente cliente, String string, Transacao transacao) {
+        return new Transacao(transacao.getTipo(), transacao.getValor(), transacao.getDescricao(), LocalDateTime.now(), cliente.getClienteId());
     }
 
     private void calcularSaldo(Cliente cliente, Transacao entity) {
