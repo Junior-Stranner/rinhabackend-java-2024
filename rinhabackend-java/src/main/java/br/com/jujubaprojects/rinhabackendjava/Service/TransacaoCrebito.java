@@ -39,19 +39,16 @@ public class TransacaoCrebito {
         return new Transacao(entity.getTipo(), entity.getValor(), entity.getDescricao(), LocalDateTime.now(), cliente.getClienteId());
     }
 
-    private void atualizarSaldo(Cliente cliente, Transacao entity) {
-        double novoSaldo = cliente.getSaldo();
+    private void calcularSaldo(Cliente cliente, Transacao entity) {
         if (entity.getTipo().equals("c")) {
-            novoSaldo += entity.getValor();
+            cliente.setSaldo(cliente.getSaldo() + entity.getValor());
         } else if (entity.getTipo().equals("d")) {
-            double novoSaldoAposDebito = novoSaldo - entity.getValor();
-            if (novoSaldoAposDebito < -cliente.getLimite()) {
-                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+            if (cliente.getSaldo() - entity.getValor() < -cliente.getLimite()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo insuficiente para a transação.");
+            } else {
+                cliente.setSaldo(cliente.getSaldo() - entity.getValor());
             }
-            novoSaldo = novoSaldoAposDebito;
         }
-        cliente.setSaldo(novoSaldo);
     }
-    
 }
 

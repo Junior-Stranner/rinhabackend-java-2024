@@ -1,6 +1,5 @@
 package br.com.jujubaprojects.rinhabackendjava.model;
 
-
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Id;
@@ -47,6 +46,5 @@ public class Cliente {
     public void setClienteId(int clienteId) {
         this.clienteId = clienteId;
     } 
-
 }
 

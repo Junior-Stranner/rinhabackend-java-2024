@@ -10,7 +10,6 @@ public class TipoValidoException extends RuntimeException {
          char debito = 'D';
         char credito = 'C';
 
-       
             if(transacaoRequest.getTipo() == null || transacaoRequest.getTipo() != credito
              && transacaoRequest.getTipo() != debito){
             throw new ValidacaoRequestException(UnprocessableEntity.UNPROCESSABLE_ENTITY.getCodigo(), "Campo 'Tipo' nulo ou com valor diferente do permitido.");
