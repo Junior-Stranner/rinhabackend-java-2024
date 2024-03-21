@@ -1,4 +1,4 @@
-package br.com.jujubaprojects.rinhabackendjava.exeptions.impl;
+package br.com.jujubaprojects.rinhabackendjava.exeptions;
 
 import br.com.jujubaprojects.rinhabackendjava.Web.exception.ValidacaoRequestException;
 import br.com.jujubaprojects.rinhabackendjava.dto.TransacaoRequestDto;

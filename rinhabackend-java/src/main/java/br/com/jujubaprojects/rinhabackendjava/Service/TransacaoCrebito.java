@@ -13,7 +13,6 @@ import br.com.jujubaprojects.rinhabackendjava.Repository.ClienteRepository;
 import br.com.jujubaprojects.rinhabackendjava.Repository.TransacaoRepository;
 import br.com.jujubaprojects.rinhabackendjava.dto.ExtratoResponseDto;
 import br.com.jujubaprojects.rinhabackendjava.dto.TransacaoExtratoResponseDtO;
-import br.com.jujubaprojects.rinhabackendjava.dto.TransacaoRequestDto;
 import br.com.jujubaprojects.rinhabackendjava.model.Cliente;
 import br.com.jujubaprojects.rinhabackendjava.model.Transacao;
 import jakarta.transaction.Transactional;
@@ -42,7 +41,7 @@ public class TransacaoCrebito {
     Cliente cliente = clienteRepository.buscarClientePorId(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado com o ID: " + id));
 
-    Integer saldoTotal = transacaoRepository.getSaldoTotalById(id).orElse(0);
+    Integer saldoTotal = transacaoRepository.getSaldoTotalById(id).get(0);
     List<TransacaoExtratoResponseDtO> ultimasTransacoes = transacaoRepository.findByIdOrderByRealizadaEmDesc(id);
 
     ExtratoResponseDto saldoDTO = new ExtratoResponseDto(saldoTotal, LocalDateTime.now(), cliente.getLimite());
