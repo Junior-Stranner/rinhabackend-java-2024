@@ -41,8 +41,8 @@ public class TransacaoCrebito {
     Cliente cliente = clienteRepository.buscarClientePorId(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado com o ID: " + id));
 
-    Integer saldoTotal = transacaoRepository.getSaldoTotalById(id).get(0);
-    List<TransacaoExtratoResponseDtO> ultimasTransacoes = transacaoRepository.findByIdOrderByRealizadaEmDesc(id);
+    Integer saldoTotal = transacaoRepository.getSaldoTotalById(id);
+    List<Transacao> ultimasTransacoes = transacaoRepository.findByIdOrderByRealizadaEmDesc(id);
 
     ExtratoResponseDto saldoDTO = new ExtratoResponseDto(saldoTotal, LocalDateTime.now(), cliente.getLimite());
     
@@ -51,7 +51,7 @@ public class TransacaoCrebito {
 
 
     private Transacao criarNovaTransacao(Cliente cliente, String string, Transacao transacao) {
-        return new Transacao(transacao.getTipo(), transacao.getValor(), transacao.getDescricao(), LocalDateTime.now(), cliente.getClienteId());
+        return new Transacao(transacao.getTipo(), transacao.getValor(), transacao.getDescricao(), LocalDateTime.now(), cliente);
     }
 
     private void calcularSaldo(Cliente cliente, Transacao entity) {

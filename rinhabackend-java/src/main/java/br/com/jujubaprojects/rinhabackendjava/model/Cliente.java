@@ -3,6 +3,8 @@ package br.com.jujubaprojects.rinhabackendjava.model;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
@@ -18,6 +20,7 @@ public class Cliente {
     private double saldo;
 
  
+
     
     public Cliente() {
     }

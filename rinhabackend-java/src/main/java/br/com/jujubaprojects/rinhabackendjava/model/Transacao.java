@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -28,14 +30,31 @@ public class Transacao {
 
     private LocalDateTime realizadaEm;
 
-    private Integer clienteId;
+  //  private Integer clienteId;
 
-    public Transacao(String tipo, Integer valor, String descricao, LocalDateTime realizadaEm, Integer clienteId) {
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+   
+
+    public Transacao() {
+    }
+
+    public Transacao(String tipo, Integer valor, String descricao, LocalDateTime realizadaEm, Cliente cliente) {
         this.tipo = tipo;
         this.valor = valor;
         this.descricao = descricao;
         this.realizadaEm = realizadaEm;
-        this.clienteId = clienteId;
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public String getTipo() {
@@ -68,14 +87,6 @@ public class Transacao {
 
     public void setRealizadaEm(LocalDateTime realizadaEm) {
         this.realizadaEm = realizadaEm;
-    }
-
-    public Integer getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(Integer clienteId) {
-        this.clienteId = clienteId;
     }
 
 

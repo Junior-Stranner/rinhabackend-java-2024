@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.jujubaprojects.rinhabackendjava.model.Transacao;
+
 
 public class ExtratoResponseDto {
 
@@ -13,13 +15,10 @@ public class ExtratoResponseDto {
      List<TransacaoExtratoResponseDtO> extratoUltimasTransacoes;
 
 
-    public ExtratoResponseDto(Integer saldoTotal, LocalDateTime now, double limite) {
-    }
+    public ExtratoResponseDto(Integer saldoTotal, LocalDateTime now, double limite) {}
 
 
-    public ExtratoResponseDto(ExtratoResponseDto saldoDTO, List<TransacaoExtratoResponseDtO> ultimasTransacoes) {
-        //TODO Auto-generated constructor stub
-    }
+    public ExtratoResponseDto(ExtratoResponseDto saldoDTO, List<Transacao> ultimasTransacoes) {  }
 
      
 }
